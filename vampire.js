@@ -10,23 +10,43 @@ class Vampire {
 
   // Adds the vampire as an offspring of this vampire
   addOffspring(vampire) {
-
+    vampire.creator = this;
+    this.offspring.push(vampire);
   }
 
   // Returns the total number of vampires created by that vampire
   get numberOfOffspring() {
-
+    let familyLength = this.offspring.length;
+    if (!familyLength) {
+      return 0;
+    }
+    return familyLength;
   }
 
   // Returns the number of vampires away from the original vampire this vampire is
   get numberOfVampiresFromOriginal() {
+    let numberOfPeople = 0;
+    let currentVampire = this;
+
+    while (currentVampire.creator) {
+      currentVampire = currentVampire.creator;
+      numberOfPeople++;
+    }
+    return numberOfPeople;
 
   }
 
   // Returns true if this vampire is more senior than the other vampire. (Who is closer to the original vampire)
   isMoreSeniorThan(vampire) {
-
+    if (this.offspring === null) {
+      return false;
+    } for (let i = 0; i < this.numberOfOffspring; i++) {
+      if (vampire.name === this.offspring[i].name)
+        return true;
+    }
+    return false;
   }
+
 
   /** Stretch **/
 
@@ -39,6 +59,14 @@ class Vampire {
 
   }
 }
+
+// const original = new Vampire(('Original', 'year'));
+// const ansel = new Vampire(('Ansel', 'year'));
+// const elgort = new Vampire(('Elgort', 'year'));
+// const andrew = new Vampire(('Andrew', 'year'));
+// const sarah = new Vampire(('Sarah', 'year'));
+// const bart = new Vampire(('Bart', 'year'));
+
 
 module.exports = Vampire;
 
